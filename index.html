@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wheat disease favourability — Estonian weather stations</title>
+<meta name="description" content="Entry point: weather favourability maps for six wheat diseases at Estonian automatic weather stations.">
+<style>
+:root{
+  color-scheme: light dark;
+  --surface-1:#fcfcfb; --plane:#f9f9f7;
+  --ink-1:#0b0b0b; --ink-2:#52514e; --ink-muted:#898781;
+  --hair:rgba(11,11,11,.10); --axis:#c3c2b7;
+  --link:#2a78d6; --crit:#d03b3b;
+}
+@media (prefers-color-scheme: dark){
+  :root:where(:not([data-theme="light"])){
+    --surface-1:#1a1a19; --plane:#0d0d0d;
+    --ink-1:#fff; --ink-2:#c3c2b7; --hair:rgba(255,255,255,.10); --axis:#383835;
+    --link:#5598e7;
+  }
+}
+:root[data-theme="dark"]{
+  --surface-1:#1a1a19; --plane:#0d0d0d;
+  --ink-1:#fff; --ink-2:#c3c2b7; --hair:rgba(255,255,255,.10); --axis:#383835;
+  --link:#5598e7;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--plane);color:var(--ink-1);
+  font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+main{max-width:620px;margin:0 auto;padding:46px 20px 64px}
+h1{margin:0;font-size:23px;font-weight:650;letter-spacing:-.02em;line-height:1.2}
+.sub{color:var(--ink-2);font-size:13px;margin-top:7px}
+.sub b{color:var(--ink-1);font-weight:600}
+.note{
+  font-size:12.5px;color:var(--ink-2);background:var(--surface-1);
+  border:1px solid var(--hair);border-left:3px solid var(--crit);
+  border-radius:7px;padding:10px 13px;margin:18px 0 22px;
+}
+.note b{color:var(--ink-1)}
+h2{font-size:11px;margin:26px 0 8px;text-transform:uppercase;letter-spacing:.055em;color:var(--ink-muted);font-weight:650}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+.card{
+  display:block;background:var(--surface-1);border:1px solid var(--hair);
+  border-radius:9px;padding:13px 15px;margin-bottom:9px;color:inherit;
+}
+.card:hover{text-decoration:none;border-color:var(--axis)}
+.card .t{font-size:15px;font-weight:650;color:var(--link);letter-spacing:-.01em}
+.card .d{font-size:12.5px;color:var(--ink-2);margin-top:4px}
+ul{margin:0;padding-left:17px}
+li{margin:5px 0;font-size:13px;color:var(--ink-2)}
+li b{color:var(--ink-1);font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--ink-1)}
+footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--hair);font-size:12px;color:var(--ink-muted)}
+</style>
+</head>
+<body>
+<main>
+  <h1>Weather-driven wheat disease favourability</h1>
+  <div class="sub">
+    Estonian automatic weather stations (ETKI / Riigi Ilmateenistus), hourly observations
+    <b>2023-10-16 → 2026-09-05</b>. Six diseases, 30 stations, seasons 2024–2026.
+  </div>
+
+  <div class="note">
+    <b>Not disease forecasts.</b> Every number is a statement about measured weather. Inoculum,
+    cultivar resistance, previous crop, tillage and fungicide use are in no model, and the risk
+    classes are not validated for Estonia.
+  </div>
+
+  <h2>Maps</h2>
+  <a class="card" href="output/wheat_disease_map/wheat_disease_map.html">
+    <div class="t">Station map →</div>
+    <div class="d">Primary product. One marker per station; nothing interpolated between them. ~3.8 MB.</div>
+  </a>
+  <a class="card" href="output/wheat_disease_map/wheat_disease_map_interpolated.html">
+    <div class="t">Interpolated surface →</div>
+    <div class="d">Separate product, separately validated. IDW surface — away from a marker every colour is a guess. ~3.8 MB.</div>
+  </a>
+
+  <h2>Documentation — read in this order</h2>
+  <ul>
+    <li><a href="output/wheat_disease_map/data_report.md"><b>data_report.md</b></a> — what is in the source data, and what was excluded and why</li>
+    <li><a href="output/wheat_disease_map/station_inventory.csv"><b>station_inventory.csv</b></a> — per-station coordinates, coverage, exclusion reason</li>
+    <li><a href="output/wheat_disease_map/models.json"><b>models.json</b></a> — every model: citation, parameters, <code>published</code> / <code>adapted</code> / <code>heuristic</code> status</li>
+    <li><a href="output/wheat_disease_map/validation_report.md"><b>validation_report.md</b></a> — QC, cross-checks, sensitivity tests, extrapolation warnings</li>
+    <li><a href="output/wheat_disease_map/interpolation_validation.md"><b>interpolation_validation.md</b></a> — cross-validation for the interpolated page only</li>
+    <li><a href="output/wheat_disease_map/README.md"><b>README.md</b></a> — method, configuration, how to rebuild</li>
+  </ul>
+
+  <footer>
+    Both maps are self-contained — they open offline, with no server and no network request.
+    Source and pipeline: <code>output/wheat_disease_map/</code>.
+  </footer>
+</main>
+</body>
+</html>
